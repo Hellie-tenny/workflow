@@ -9,13 +9,24 @@ export default function Container() {
         e.preventDefault();
 
         const newItem = {id: Date.now(), title: newTitle}
-
-        setTodos([...todos, newItem]);
+        const updatedList = [...todos, newItem];
+        setTodos(updatedList);
+        localStorage.setItem('todos', JSON.stringify(updatedList));
     }
 
-    // useEffect(() => {
-    //     localStorage.setItem('todos', JSON.stringify(todos));
-    // }, [todos]);
+    useEffect(() => {
+        if (localStorage.getItem('todos') != null) {
+            setTodos(JSON.parse(localStorage.getItem('todos')));
+        } else {
+            setTodos([]);
+        }
+        console.log("This is what is supposed to be the initial useEffect!")
+        // localStorage.getItem('todos') ? setTodos(localStorage.getItem('todos')) : setTodos([]);
+    }, []);
+
+    useEffect(() => {
+        console.log(localStorage.getItem('todos'));
+    }, [todos]);
 
     return (
         <div className="container">
