@@ -2,21 +2,20 @@ import { useEffect, useState } from "react";
 
 export default function Container() {
 
-    localStorage.
-
     const[newTitle, setNewTitle] = useState("");
+    const[todos, setTodos] = useState([]);
 
     function addToList(e) {
         e.preventDefault();
 
         const newItem = {id: Date.now(), title: newTitle}
 
-        setToDos([...todos, newItem]);
+        setTodos([...todos, newItem]);
     }
 
-    useEffect(() => {
-        localStorage.setItem('todos', JSON.stringify(todos));
-    }, [todos]);
+    // useEffect(() => {
+    //     localStorage.setItem('todos', JSON.stringify(todos));
+    // }, [todos]);
 
     return (
         <div className="container">
