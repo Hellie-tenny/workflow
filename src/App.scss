@@ -60,6 +60,10 @@ $accentColor: yellow;
                 outline: none;
                 color: #fff;
             }
+            input::placeholder{
+                color: #fff;
+                opacity: 1;
+            }
 
             button{
                 background-color: $accentColor;
@@ -75,6 +79,20 @@ $accentColor: yellow;
             li{
                 list-style: none;
                 padding:0.5rem 0;
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+
+                input[type="checkbox"]{
+                    cursor: pointer;
+                }
+                i{
+                    cursor: pointer;
+                }
+
+            }
+            li.done{
+                color: yellow;
             }
         }
     }

@@ -8,10 +8,17 @@ export default function Container() {
     function addToList(e) {
         e.preventDefault();
 
-        const newItem = {id: Date.now(), title: newTitle}
+        const newItem = {id: Date.now(), title: newTitle, done: false}
         const updatedList = [...todos, newItem];
         setTodos(updatedList);
         localStorage.setItem('todos', JSON.stringify(updatedList));
+    }
+
+    function updateDone(id){
+        const updatedTodos = todos.map((todo) => todo.id === id ? {...todo, done: !todo.done} : todo);
+        console.log(updatedTodos);
+        localStorage.setItem('todos', JSON.stringify(updatedTodos));
+        setTodos(updatedTodos);
     }
 
     useEffect(() => {
@@ -32,12 +39,18 @@ export default function Container() {
         <div className="container">
 
             <form>
-                <input type="text" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} placeholder="Add to list" /> <button onClick={addToList}>ADD</button>
+                <input type="text" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} placeholder="Add to list..." /> <button onClick={addToList}>ADD</button>
             </form>
 
             <ul>
                 {todos.map(todo => (
-                    <li key={todo.id}>{todo.title}</li>
+                    <li key={todo.id} className={todo.done ? "done" : ""} >
+                        <div>
+                            <input type="checkbox" checked={todo.done} onChange={() =>updateDone(todo.id)} />
+                            {todo.title}
+                        </div>
+                        <div><i class="fa-regular fa-trash-can"></i></div>
+                    </li>
                 ))}
             </ul>
         </div>

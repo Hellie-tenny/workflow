@@ -45,6 +45,14 @@
   outline: none;
   color: #fff;
 }
+.App .container form input::-moz-placeholder {
+  color: #fff;
+  opacity: 1;
+}
+.App .container form input::placeholder {
+  color: #fff;
+  opacity: 1;
+}
 .App .container form button {
   background-color: yellow;
   padding: 0.5rem;
@@ -56,4 +64,16 @@
 .App .container ul li {
   list-style: none;
   padding: 0.5rem 0;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.App .container ul li input[type=checkbox] {
+  cursor: pointer;
+}
+.App .container ul li i {
+  cursor: pointer;
+}
+.App .container ul li.done {
+  color: yellow;
 }/*# sourceMappingURL=App.css.map */
