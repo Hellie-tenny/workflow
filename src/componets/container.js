@@ -21,6 +21,8 @@ export default function Container() {
         setTodos(updatedTodos);
     }
 
+    //just testing if my auto save is on 
+
     useEffect(() => {
         if (localStorage.getItem('todos') != null) {
             setTodos(JSON.parse(localStorage.getItem('todos')));
