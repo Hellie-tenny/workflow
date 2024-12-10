@@ -51,6 +51,67 @@ $accentColor: yellow;
         width: 40%;
         margin: 2rem auto;
         color: #fff;
+        position: relative;
+
+        .deleteDialog-container{
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.3);
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            .deleteDialog{
+                background-color: #fff;
+                color: black;
+                width: 40%;
+                padding: 1rem;
+    
+                div{
+                    display: flex;
+                    justify-content: space-between;
+    
+                    button{
+                        border: none;
+                        padding: .5rem;
+                        margin: .5rem 0;
+                        cursor: pointer;
+                        background-color: $primaryColor;
+                        color: #fff;
+                        width: 4rem;
+                    }
+                    button:hover{
+                        color: yellow;
+                    }
+                }
+            }
+        }
+
+        .active{
+            display: flex;
+        }
+
+        .menu{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+
+            span{
+                font-weight: 600;
+                padding: 1rem;
+                cursor: pointer;
+            }
+            span:hover{
+                color: yellow;
+            }
+            span.active{
+                border-bottom: 2px solid yellow;
+            }
+        }
         
         form{
             input[type="text"]{
