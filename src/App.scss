@@ -53,6 +53,19 @@ $accentColor: yellow;
         color: #fff;
         position: relative;
 
+        .progress{
+            width: 100%;
+            height: .5rem;
+            background-color: $baseColor;
+            margin: 1rem 0;
+
+
+            .progress-indicator{
+                height: 100%;
+                background-color: yellow;
+            }
+        }
+
         .deleteDialog-container{
             width: 100%;
             height: 100%;
@@ -133,6 +146,10 @@ $accentColor: yellow;
                 color: black;
                 font-weight: 600;
                 cursor: pointer;
+            }
+            button:hover{
+                background-color: #fff;
+                color: $primaryColor;
             }
         }
 

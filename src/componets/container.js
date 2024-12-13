@@ -5,6 +5,8 @@ export default function Container() {
     const [newTitle, setNewTitle] = useState("");
     const [todos, setTodos] = useState([]);
     const [targetItem, setTargetItem] = useState("");
+    const [completedTodos, setCompletedTodos] = useState([]);
+    const [completedPercentage, setCompletedPercentage] = useState(0);
 
     function addToList(e) {
         e.preventDefault();
@@ -22,11 +24,11 @@ export default function Container() {
         setTodos(updatedTodos);
     }
 
-    function closePopup(){
+    function closePopup() {
         document.getElementById('deleteDialog-container').classList.remove('active');
     }
 
-    function openPopup(id){
+    function openPopup(id) {
         document.getElementById('deleteDialog-container').classList.add('active');
         setTargetItem(id);
     }
@@ -43,6 +45,7 @@ export default function Container() {
     useEffect(() => {
         if (localStorage.getItem('todos') != null) {
             setTodos(JSON.parse(localStorage.getItem('todos')));
+            setCompletedPercentage((Number(completedTodos.length) / Number(JSON.parse(localStorage.getItem('todos')).length)) * 100);
         } else {
             setTodos([]);
         }
@@ -51,13 +54,17 @@ export default function Container() {
     }, []);
 
     useEffect(() => {
+        const completed = todos.filter((todo) => todo.done);
+        setCompletedTodos(completed);
+        setCompletedPercentage((Number(completedTodos.length) / Number(todos.length)) * 100);
+        console.log("These are the completed todos", completedTodos);
         console.log(localStorage.getItem('todos'));
     }, [todos]);
 
     return (
         <div className="container">
 
-            <div className="deleteDialog-container"  id="deleteDialog-container" onClick={closePopup}>
+            <div className="deleteDialog-container" id="deleteDialog-container" onClick={closePopup}>
                 <div className="deleteDialog">
                     Are you sure you want to delete this item?
                     <div>
@@ -68,6 +75,10 @@ export default function Container() {
 
             <div className="menu">
                 <span className="active">To-do List</span><span>Objectives</span>
+            </div>
+
+            <div className="progress">
+                <div className="progress-indicator" style={{ width: `${completedPercentage}%` }}></div>
             </div>
 
             <form>
@@ -81,7 +92,7 @@ export default function Container() {
                             <input type="checkbox" checked={todo.done} onChange={() => updateDone(todo.id)} />
                             {todo.title}
                         </div>
-                        <div><i class="fa-regular fa-trash-can" onClick={() => openPopup(todo.id)}></i></div>
+                        <div><i className="fa-regular fa-trash-can" onClick={() => openPopup(todo.id)}></i></div>
                     </li>
                 ))}
             </ul>
