@@ -45,20 +45,20 @@ export default function Container() {
     useEffect(() => {
         if (localStorage.getItem('todos') != null) {
             setTodos(JSON.parse(localStorage.getItem('todos')));
-            setCompletedPercentage((Number(completedTodos.length) / Number(JSON.parse(localStorage.getItem('todos')).length)) * 100);
         } else {
             setTodos([]);
         }
-        console.log("This is what is supposed to be the initial useEffect!")
+        console.log("This is what is supposed to be the initial useEffect!");
+        console.log(JSON.parse(localStorage.getItem('todos')).length);
         // localStorage.getItem('todos') ? setTodos(localStorage.getItem('todos')) : setTodos([]);
     }, []);
 
     useEffect(() => {
         const completed = todos.filter((todo) => todo.done);
         setCompletedTodos(completed);
-        setCompletedPercentage((Number(completedTodos.length) / Number(todos.length)) * 100);
         console.log("These are the completed todos", completedTodos);
         console.log(localStorage.getItem('todos'));
+        setCompletedPercentage((Number(completed.length) / Number(todos.length)) * 100);
     }, [todos]);
 
     return (

@@ -48,6 +48,7 @@
 .App .container .progress .progress-indicator {
   height: 100%;
   background-color: yellow;
+  transition: width 0.5s ease-in-out;
 }
 .App .container .deleteDialog-container {
   width: 100%;
@@ -135,6 +136,7 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
+  animation: fadeIn 0.5s ease-in-out;
 }
 .App .container ul li input[type=checkbox] {
   cursor: pointer;
@@ -144,4 +146,15 @@
 }
 .App .container ul li.done {
   color: yellow;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }/*# sourceMappingURL=App.css.map */
