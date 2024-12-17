@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import Todolist from "./Todolist";
+import Objectives from "./Objectives";
 
 export default function Container() {
 
@@ -7,15 +9,26 @@ export default function Container() {
     const [targetItem, setTargetItem] = useState("");
     const [completedTodos, setCompletedTodos] = useState([]);
     const [completedPercentage, setCompletedPercentage] = useState(0);
+    const [page, setPage] = useState("objectives");
 
     function addToList(e) {
         e.preventDefault();
 
-        const newItem = { id: Date.now(), title: newTitle, done: false }
-        const updatedList = [...todos, newItem];
-        setTodos(updatedList);
-        localStorage.setItem('todos', JSON.stringify(updatedList));
-        setNewTitle("");
+        if (newTitle !== "") {
+            const newItem = { id: Date.now(), title: newTitle, done: false }
+            const updatedList = [...todos, newItem];
+            setTodos(updatedList);
+            localStorage.setItem('todos', JSON.stringify(updatedList));
+            setNewTitle("");
+        }
+    }
+
+    function switchPages(selectedPage) {
+        if (page === selectedPage) {
+            return;
+        } else {
+            setPage(selectedPage);
+        }
     }
 
     function deleteTodo(id) {
@@ -74,28 +87,30 @@ export default function Container() {
             </div>
 
             <div className="menu">
-                <span className="active">To-do List</span><span>Objectives</span>
+                <span className={page === "todolist" ? "active" : ""} onClick={() => switchPages("todolist")}>To-do List</span><span className={page === "objectives" ? "active" : ""} onClick={() => switchPages("objectives")}>Objectives</span>
             </div>
 
-            <div className="progress">
-                <div className="progress-indicator" style={{ width: `${completedPercentage}%` }}></div>
-            </div>
+            {page === "todolist" ?
 
-            <form>
-                <input type="text" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} placeholder="Add to list..." /> <button onClick={addToList}>ADD</button>
-            </form>
+                <Todolist
+                    completedPercentage={completedPercentage}
+                    newTitle={newTitle}
+                    setNewTitle={setNewTitle}
+                    addToList={addToList}
+                    todos={todos}
+                    updateDone={updateDone}
+                    openPopup={openPopup}
+                /> :
 
-            <ul>
-                {todos.map(todo => (
-                    <li key={todo.id} className={todo.done ? "done" : ""} >
-                        <div>
-                            <input type="checkbox" checked={todo.done} onChange={() => updateDone(todo.id)} />
-                            {todo.title}
-                        </div>
-                        <div><i className="fa-regular fa-trash-can" onClick={() => openPopup(todo.id)}></i></div>
-                    </li>
-                ))}
-            </ul>
+                page === "objectives" ?
+
+                    <Objectives />
+
+                    : null
+
+
+            }
+
         </div>
     );
 }

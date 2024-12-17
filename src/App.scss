@@ -116,6 +116,7 @@ $accentColor: yellow;
 
             span{
                 font-weight: 600;
+                width: 100%;
                 padding: 1rem;
                 cursor: pointer;
             }
@@ -125,6 +126,7 @@ $accentColor: yellow;
             span.active{
                 border-bottom: 2px solid yellow;
             }
+
         }
         
         form{
@@ -187,3 +189,7 @@ $accentColor: yellow;
         transform: translateY(0);
     }
 }
+
+// @keyframes slideRight {
+    
+// }

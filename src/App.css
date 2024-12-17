@@ -94,6 +94,7 @@
 }
 .App .container .menu span {
   font-weight: 600;
+  width: 100%;
   padding: 1rem;
   cursor: pointer;
 }
