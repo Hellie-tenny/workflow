@@ -102,6 +102,7 @@
   color: yellow;
 }
 .App .container .menu span.active {
+  color: yellow;
   border-bottom: 2px solid yellow;
 }
 .App .container form input[type=text] {
