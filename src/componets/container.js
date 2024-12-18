@@ -9,7 +9,7 @@ export default function Container() {
     const [targetItem, setTargetItem] = useState("");
     const [completedTodos, setCompletedTodos] = useState([]);
     const [completedPercentage, setCompletedPercentage] = useState(0);
-    const [page, setPage] = useState("objectives");
+    const [page, setPage] = useState("todolist");
 
     function addToList(e) {
         e.preventDefault();
@@ -62,7 +62,7 @@ export default function Container() {
             setTodos([]);
         }
         console.log("This is what is supposed to be the initial useEffect!");
-        console.log(JSON.parse(localStorage.getItem('todos')).length);
+        // console.log(JSON.parse(localStorage.getItem('todos')).length);
         // localStorage.getItem('todos') ? setTodos(localStorage.getItem('todos')) : setTodos([]);
     }, []);
 
