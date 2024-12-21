@@ -13,12 +13,14 @@ const Objectives = () => {
     function openPopup(id) {
         document.getElementById('deleteDialog-container').classList.add('active');
         setTargetItem(id);
+        console.log("The delete button has been clicked!!", targetItem);
     }
 
     function deleteObjective(id) {
-        const updatedObjectives = objectives.filter((objective) => objective.id !== id);
+        const updatedObjectives = objectives.filter((objective) => objective.id !== targetItem);
         localStorage.setItem('objectives', JSON.stringify(updatedObjectives));
         setObjectives(updatedObjectives);
+        console.log("Objective deleted", id)
     }
 
     function addToList(e) {
@@ -40,6 +42,14 @@ const Objectives = () => {
         setObjectives(updatedObjectives);
     }
 
+    function openMilestonePopup() {
+        document.getElementById('addmilestone-dialog-container').classList.add('active');
+    }
+
+    function closeMilestonePopup() {
+        document.getElementById('addmilestone-dialog-container').classList.remove('active');
+    }
+
     useEffect(() => {
         if (localStorage.getItem('objectives') != null) {
             setObjectives(JSON.parse(localStorage.getItem('objectives')));
@@ -53,12 +63,22 @@ const Objectives = () => {
 
     return (
         <div className="objectives-container">
-
+            
             <div className="deleteDialog-container" id="deleteDialog-container" onClick={closePopup}>
                 <div className="deleteDialog">
                     Are you sure you want to delete this item?
                     <div>
-                        <button onClick={() => deleteObjective(targetItem)}>Yes</button><button onClick={closePopup}>NO</button>
+                        <button onClick={() => deleteObjective(targetItem)}>Yes</button>
+                        <button onClick={closePopup}>NO</button>
+                    </div>
+                </div>
+            </div>
+
+            <div className="addmilestone-dialog-container" id="addmilestone-dialog-container" onClick={closeMilestonePopup}>
+                <div className="addmilestone-dialog">
+                    Are you sure you want to delete this item?
+                    <div>
+                        This container will have a form for adding a new milestone
                     </div>
                 </div>
             </div>
@@ -74,7 +94,10 @@ const Objectives = () => {
                             <input type="checkbox" checked={objective.done} onChange={() => updateDone(objective.id)} />
                             {objective.title}
                         </div>
-                        <div><i className="fa-regular fa-trash-can" onClick={() => openPopup(objective.id)}></i></div>
+                        <div>
+                            <i className="fa-regular fa-plus" onClick={() => openMilestonePopup(objective)}></i>
+                            <i className="fa-regular fa-trash-can" onClick={() => openPopup(objective.id)}></i>
+                        </div>
                     </li>
                 ))}
             </ul>

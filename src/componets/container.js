@@ -31,16 +31,6 @@ export default function Container() {
         }
     }
 
-    function deleteTodo(id) {
-        const updatedTodos = todos.filter((todo) => todo.id !== id);
-        localStorage.setItem('todos', JSON.stringify(updatedTodos));
-        setTodos(updatedTodos);
-    }
-
-    function closePopup() {
-        document.getElementById('deleteDialog-container').classList.remove('active');
-    }
-
     function openPopup(id) {
         document.getElementById('deleteDialog-container').classList.add('active');
         setTargetItem(id);
@@ -77,15 +67,6 @@ export default function Container() {
     return (
         <div className="container">
 
-            <div className="deleteDialog-container" id="deleteDialog-container" onClick={closePopup}>
-                <div className="deleteDialog">
-                    Are you sure you want to delete this item?
-                    <div>
-                        <button onClick={() => deleteTodo(targetItem)}>Yes</button><button onClick={closePopup}>NO</button>
-                    </div>
-                </div>
-            </div>
-
             <div className="menu">
                 <span className={page === "todolist" ? "active" : ""} onClick={() => switchPages("todolist")}>To-do List</span><span className={page === "objectives" ? "active" : ""} onClick={() => switchPages("objectives")}>Objectives</span>
             </div>
@@ -100,6 +81,8 @@ export default function Container() {
                     todos={todos}
                     updateDone={updateDone}
                     openPopup={openPopup}
+                    setTodos={setTodos}
+                    targetItem={targetItem}
                 /> :
 
                 page === "objectives" ?
