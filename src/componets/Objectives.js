@@ -5,6 +5,7 @@ const Objectives = () => {
     const [objectives, setObjectives] = useState([]);
     const [targetItem, setTargetItem] = useState("");
     const [newTitle, setNewTitle] = useState("");
+    const [newMilestone, setNewMilestone] = useState("");
 
     function closePopup() {
         document.getElementById('deleteDialog-container').classList.remove('active');
@@ -27,7 +28,7 @@ const Objectives = () => {
         e.preventDefault();
 
         if (newTitle !== "") {
-            const newItem = { id: Date.now(), title: newTitle, done: false }
+            const newItem = { id: Date.now(), title: newTitle, done: false, milestones: [] }
             const updatedList = [...objectives, newItem];
             setObjectives(updatedList);
             localStorage.setItem('objectives', JSON.stringify(updatedList));
@@ -42,12 +43,27 @@ const Objectives = () => {
         setObjectives(updatedObjectives);
     }
 
-    function openMilestonePopup() {
+    function openMilestonePopup(id) {
         document.getElementById('addmilestone-dialog-container').classList.add('active');
+        setTargetItem(id);
     }
 
     function closeMilestonePopup() {
         document.getElementById('addmilestone-dialog-container').classList.remove('active');
+    }
+
+    function handleAddMilestone(e) {
+        e.preventDefault();
+
+        if(newMilestone !== ""){
+            const newMilestoneObj = { id: Date.now(), title: newMilestone, done: false };
+
+            const updatedObjectives = objectives.map((objective) => objective.id === targetItem ? { ...objective, milestones: [...objective.milestones, newMilestoneObj] } : objective);
+            localStorage.setItem('objectives', JSON.stringify(updatedObjectives));
+            setObjectives(updatedObjectives);
+            setNewMilestone(""); 
+        }
+
     }
 
     useEffect(() => {
@@ -63,7 +79,7 @@ const Objectives = () => {
 
     return (
         <div className="objectives-container">
-            
+
             <div className="deleteDialog-container" id="deleteDialog-container" onClick={closePopup}>
                 <div className="deleteDialog">
                     Are you sure you want to delete this item?
@@ -74,11 +90,17 @@ const Objectives = () => {
                 </div>
             </div>
 
-            <div className="addmilestone-dialog-container" id="addmilestone-dialog-container" onClick={closeMilestonePopup}>
+            <div className="addmilestone-dialog-container" id="addmilestone-dialog-container">
                 <div className="addmilestone-dialog">
-                    Are you sure you want to delete this item?
+                    <h2>Add Milestone</h2>
                     <div>
-                        This container will have a form for adding a new milestone
+                        <form onSubmit={handleAddMilestone}>
+                            <input placeholder="Type milestone" value={newMilestone} onChange={(e) => setNewMilestone(e.target.value)} />
+                            <div>
+                                <button onClick={handleAddMilestone}>Add</button>
+                                <button onClick={closeMilestonePopup}>Cancel</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -90,14 +112,27 @@ const Objectives = () => {
             <ul>
                 {objectives.map(objective => (
                     <li key={objective.id} className={objective.done ? "done" : ""} >
-                        <div>
-                            <input type="checkbox" checked={objective.done} onChange={() => updateDone(objective.id)} />
-                            {objective.title}
+
+
+                        <div className="objective">
+                            <div>
+                                <input type="checkbox" checked={objective.done} onChange={() => updateDone(objective.id)} />
+                                {objective.title}
+                            </div>
+                            <div>
+                                <i className="fa-regular fa-plus" onClick={() => openMilestonePopup(objective.id)}></i>
+                                <i className="fa-regular fa-trash-can" onClick={() => openPopup(objective.id)}></i>
+                            </div>
                         </div>
-                        <div>
-                            <i className="fa-regular fa-plus" onClick={() => openMilestonePopup(objective)}></i>
-                            <i className="fa-regular fa-trash-can" onClick={() => openPopup(objective.id)}></i>
+
+                        <div className="milestones">
+                            {
+                                objective.milestones.map((milestone) => (
+                                    <div>{milestone.title}</div>
+                                ))
+                            }
                         </div>
+
                     </li>
                 ))}
             </ul>
