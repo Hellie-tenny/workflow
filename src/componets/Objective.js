@@ -1,11 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 const Objective = (props) => {
 
     const [milestonesOpen, setMilestonesOpen] = useState(false);
+    const [completedMilestones, setCompletedMilestones] = useState([]);
+    const [completedPercentage, setCompletedMilestonesPercentage] = useState(0);
 
     function toggleMilestones() {
         setMilestonesOpen(!milestonesOpen);
     }
+
+    useEffect(() => {
+        const completedMilestones = props.objective.milestones.filter((milestone) => milestone.done);
+        setCompletedMilestones(completedMilestones);
+        console.log("These are the completed Milestones", completedMilestones);
+        console.log(localStorage.getItem('todos'));
+        setCompletedMilestonesPercentage((Number(completedMilestones.length) / Number(props.objective.milestones.length)) * 100);
+    }, [props.objective.milestones]);
 
     return (
         <div className="objective">
@@ -21,8 +31,8 @@ const Objective = (props) => {
                     <i id="arrow" className={milestonesOpen ? "fa-solid fa-angle-down rotate" : "fa-solid fa-angle-down rotated-back"} onClick={toggleMilestones}></i>
                 </div>
             </div>
-            <div className="progress">
-                <div className="progress-indicator" style={{ width: `${100}%` }}></div>
+            <div className="objective-progress">
+                <div className="progress-indicator" style={{ width: `${completedPercentage}%` }}></div>
             </div>
 
             <div className={milestonesOpen ? "milestones open" : "milestones closed"}>

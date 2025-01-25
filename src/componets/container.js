@@ -56,13 +56,7 @@ export default function Container() {
         // localStorage.getItem('todos') ? setTodos(localStorage.getItem('todos')) : setTodos([]);
     }, []);
 
-    useEffect(() => {
-        const completed = todos.filter((todo) => todo.done);
-        setCompletedTodos(completed);
-        console.log("These are the completed todos", completedTodos);
-        console.log(localStorage.getItem('todos'));
-        setCompletedPercentage((Number(completed.length) / Number(todos.length)) * 100);
-    }, [todos]);
+     
 
     return (
         <div className="container">
