@@ -9,6 +9,62 @@
   font-family: raleway;
 }
 
+globals .deleteDialog-container,
+.addmilestone-dialog-container,
+.deleteMiletoneDialog-container {
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+globals .deleteDialog-container .addmilestone-dialog,
+globals .deleteDialog-container .deleteDialog,
+.addmilestone-dialog-container .addmilestone-dialog,
+.addmilestone-dialog-container .deleteDialog,
+.deleteMiletoneDialog-container .addmilestone-dialog,
+.deleteMiletoneDialog-container .deleteDialog {
+  background-color: #fff;
+  color: black;
+  width: 40%;
+  padding: 1rem;
+}
+globals .deleteDialog-container .addmilestone-dialog div,
+globals .deleteDialog-container .deleteDialog div,
+.addmilestone-dialog-container .addmilestone-dialog div,
+.addmilestone-dialog-container .deleteDialog div,
+.deleteMiletoneDialog-container .addmilestone-dialog div,
+.deleteMiletoneDialog-container .deleteDialog div {
+  display: flex;
+  justify-content: space-between;
+}
+globals .deleteDialog-container .addmilestone-dialog div button,
+globals .deleteDialog-container .deleteDialog div button,
+.addmilestone-dialog-container .addmilestone-dialog div button,
+.addmilestone-dialog-container .deleteDialog div button,
+.deleteMiletoneDialog-container .addmilestone-dialog div button,
+.deleteMiletoneDialog-container .deleteDialog div button {
+  border: none;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  cursor: pointer;
+  background-color: rgb(2, 133, 173);
+  color: #fff;
+  width: 48%;
+}
+globals .deleteDialog-container .addmilestone-dialog div button:hover,
+globals .deleteDialog-container .deleteDialog div button:hover,
+.addmilestone-dialog-container .addmilestone-dialog div button:hover,
+.addmilestone-dialog-container .deleteDialog div button:hover,
+.deleteMiletoneDialog-container .addmilestone-dialog div button:hover,
+.deleteMiletoneDialog-container .deleteDialog div button:hover {
+  color: yellow;
+}
+
 .App {
   background-color: rgb(208, 244, 255);
   min-height: 100vh;
@@ -51,7 +107,7 @@
   transition: width 0.5s ease-in-out;
 }
 .App .container .deleteDialog-container,
-.App .container .addmilestone-dialog-container {
+.App .container .addmilestone-dialog-container, .App .container .deleteMiletoneDialog {
   width: 100%;
   height: 100%;
   display: none;
@@ -65,7 +121,8 @@
 .App .container .deleteDialog-container .addmilestone-dialog,
 .App .container .deleteDialog-container .deleteDialog,
 .App .container .addmilestone-dialog-container .addmilestone-dialog,
-.App .container .addmilestone-dialog-container .deleteDialog {
+.App .container .addmilestone-dialog-container .deleteDialog, .App .container .deleteMiletoneDialog .addmilestone-dialog,
+.App .container .deleteMiletoneDialog .deleteDialog {
   background-color: #fff;
   color: black;
   width: 40%;
@@ -74,14 +131,16 @@
 .App .container .deleteDialog-container .addmilestone-dialog div,
 .App .container .deleteDialog-container .deleteDialog div,
 .App .container .addmilestone-dialog-container .addmilestone-dialog div,
-.App .container .addmilestone-dialog-container .deleteDialog div {
+.App .container .addmilestone-dialog-container .deleteDialog div, .App .container .deleteMiletoneDialog .addmilestone-dialog div,
+.App .container .deleteMiletoneDialog .deleteDialog div {
   display: flex;
   justify-content: space-between;
 }
 .App .container .deleteDialog-container .addmilestone-dialog div button,
 .App .container .deleteDialog-container .deleteDialog div button,
 .App .container .addmilestone-dialog-container .addmilestone-dialog div button,
-.App .container .addmilestone-dialog-container .deleteDialog div button {
+.App .container .addmilestone-dialog-container .deleteDialog div button, .App .container .deleteMiletoneDialog .addmilestone-dialog div button,
+.App .container .deleteMiletoneDialog .deleteDialog div button {
   border: none;
   padding: 0.5rem;
   margin: 0.5rem 0;
@@ -93,7 +152,8 @@
 .App .container .deleteDialog-container .addmilestone-dialog div button:hover,
 .App .container .deleteDialog-container .deleteDialog div button:hover,
 .App .container .addmilestone-dialog-container .addmilestone-dialog div button:hover,
-.App .container .addmilestone-dialog-container .deleteDialog div button:hover {
+.App .container .addmilestone-dialog-container .deleteDialog div button:hover, .App .container .deleteMiletoneDialog .addmilestone-dialog div button:hover,
+.App .container .deleteMiletoneDialog .deleteDialog div button:hover {
   color: yellow;
 }
 .App .container .active {
@@ -177,18 +237,88 @@
   padding: 0.5rem;
   width: 100%;
 }
+.App .objectives-container .deleteMilestoneDialog-container {
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.App .objectives-container .deleteMilestoneDialog-container .deleteMilestoneDialog {
+  background-color: #fff;
+  color: black;
+  width: 40%;
+  padding: 1rem;
+}
+.App .objectives-container .deleteMilestoneDialog-container .deleteMilestoneDialog div {
+  display: flex;
+  justify-content: space-between;
+}
+.App .objectives-container .deleteMilestoneDialog-container .deleteMilestoneDialog div button {
+  border: none;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  cursor: pointer;
+  background-color: rgb(2, 133, 173);
+  color: #fff;
+  width: 48%;
+}
+.App .objectives-container .deleteMilestoneDialog-container .deleteMilestoneDialog div button:hover {
+  color: yellow;
+}
+.App .objectives-container .active {
+  display: flex;
+}
 .App .objectives-container ul li {
   display: flex;
   flex-direction: column;
 }
 .App .objectives-container ul li .objective {
   display: flex;
+  flex-direction: column;
+  background-color: rgb(0, 61, 80);
+  padding: 0.5rem;
+  cursor: pointer;
+}
+.App .objectives-container ul li .objective .objective-container {
+  display: flex;
   justify-content: space-between;
 }
-.App .objectives-container ul li .milestone {
-  background-color: pink;
+.App .objectives-container ul li .objective .objective-container .objective-header span {
+  margin-left: 0.5rem;
 }
-
+.App .objectives-container ul li .objective .objective-container .objective-controls .rotate {
+  transform: rotate(180deg);
+  animation: rotate 0.5s ease;
+}
+.App .objectives-container ul li .objective .objective-container .objective-controls .rotated-back {
+  transform: rotate(0deg);
+  animation: rotated-back 0.5s ease;
+}
+.App .objectives-container ul li .milestones {
+  margin-left: 1rem;
+  overflow: hidden;
+}
+.App .objectives-container ul li .milestones .milestone {
+  display: flex;
+  justify-content: space-between;
+  animation: fadeIn 0.5s ease-in-out;
+  padding: 0.5rem 0;
+}
+.App .objectives-container ul li .milestones .milestone .left {
+  display: flex;
+  align-items: center;
+}
+.App .objectives-container ul li .milestones .done {
+  color: yellow;
+}
+.App .objectives-container ul li .closed {
+  height: 0;
+}
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -197,5 +327,21 @@
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+@keyframes rotated-back {
+  0% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(0deg);
   }
 }/*# sourceMappingURL=App.css.map */

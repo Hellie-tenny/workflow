@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Objective from "./Objective";
 
 const Objectives = () => {
 
@@ -6,6 +7,8 @@ const Objectives = () => {
     const [targetItem, setTargetItem] = useState("");
     const [newTitle, setNewTitle] = useState("");
     const [newMilestone, setNewMilestone] = useState("");
+    const [targetMilestone, setTargetMilestone] = useState("");
+    const [targetObjective, setTargetObjective] = useState("");
 
     function closePopup() {
         document.getElementById('deleteDialog-container').classList.remove('active');
@@ -13,8 +16,15 @@ const Objectives = () => {
 
     function openPopup(id) {
         document.getElementById('deleteDialog-container').classList.add('active');
-        setTargetItem(id);
+        setTargetMilestone(id);
         console.log("The delete button has been clicked!!", targetItem);
+    }
+
+    function openDeleteMilestonePopup(objectiveId, milestoneId) {
+        setTargetObjective(objectiveId);
+        setTargetMilestone(milestoneId);
+
+        document.getElementById('deleteMilestoneDialog-container').classList.add('active');
     }
 
     function deleteObjective(id) {
@@ -52,19 +62,56 @@ const Objectives = () => {
         document.getElementById('addmilestone-dialog-container').classList.remove('active');
     }
 
+    function closeDeleteMilestonePopup() {
+        document.getElementById('deleteMilestoneDialog-container').classList.remove('active');
+    }
+
     function handleAddMilestone(e) {
         e.preventDefault();
 
-        if(newMilestone !== ""){
+        if (newMilestone !== "") {
             const newMilestoneObj = { id: Date.now(), title: newMilestone, done: false };
 
             const updatedObjectives = objectives.map((objective) => objective.id === targetItem ? { ...objective, milestones: [...objective.milestones, newMilestoneObj] } : objective);
             localStorage.setItem('objectives', JSON.stringify(updatedObjectives));
             setObjectives(updatedObjectives);
-            setNewMilestone(""); 
+            setNewMilestone("");
         }
 
     }
+
+    function milestoneDone(objectiveid, milestoneid, doneStatus) {
+        const updatedMilestones = objectives.map((objective) => objective.id === objectiveid ? {
+            ...objective, milestones: objective.milestones.map((milestone) =>
+                milestone.id === milestoneid ? { ...milestone, done: !doneStatus } : milestone)
+        } : objective);
+
+        localStorage.setItem('objectives', JSON.stringify(updatedMilestones));
+        setObjectives(updatedMilestones);
+
+        console.log(updatedMilestones);
+    }
+
+    function deleteMilestone(objectiveId, milestoneId) {
+        const updatedMilestones = objectives.map(
+            (objective) =>
+                objective.id === objectiveId ?
+                    {
+                        ...objective,
+                        milestones: objective.milestones.filter(
+                            (milestone) => milestone.id !== milestoneId
+                        )
+                    } : objective
+
+        );
+
+        // console.log(updatedMilestones);
+
+        localStorage.setItem('objectives', JSON.stringify(updatedMilestones));
+        setObjectives(updatedMilestones);
+    }
+
+
 
     useEffect(() => {
         if (localStorage.getItem('objectives') != null) {
@@ -82,10 +129,20 @@ const Objectives = () => {
 
             <div className="deleteDialog-container" id="deleteDialog-container" onClick={closePopup}>
                 <div className="deleteDialog">
-                    Are you sure you want to delete this item?
+                    Are you sure you want to delete this Objective?
                     <div>
                         <button onClick={() => deleteObjective(targetItem)}>Yes</button>
                         <button onClick={closePopup}>NO</button>
+                    </div>
+                </div>
+            </div>
+
+            <div className="deleteMilestoneDialog-container" id="deleteMilestoneDialog-container" onClick={closeDeleteMilestonePopup}>
+                <div className="deleteMilestoneDialog">
+                    Are you sure you want to delete this Milestone?
+                    <div>
+                        <button onClick={() => deleteMilestone(targetObjective, targetMilestone)}>Yes</button>
+                        <button onClick={closeDeleteMilestonePopup}>NO</button>
                     </div>
                 </div>
             </div>
@@ -114,24 +171,15 @@ const Objectives = () => {
                     <li key={objective.id} className={objective.done ? "done" : ""} >
 
 
-                        <div className="objective">
-                            <div>
-                                <input type="checkbox" checked={objective.done} onChange={() => updateDone(objective.id)} />
-                                {objective.title}
-                            </div>
-                            <div>
-                                <i className="fa-regular fa-plus" onClick={() => openMilestonePopup(objective.id)}></i>
-                                <i className="fa-regular fa-trash-can" onClick={() => openPopup(objective.id)}></i>
-                            </div>
-                        </div>
+                        <Objective
+                            objective={objective}
+                            updateDone={updateDone}
+                            openMilestonePopup={openMilestonePopup}
+                            openPopup={openPopup}
+                            milestoneDone={milestoneDone}
+                            openDeleteMilestonePopup={openDeleteMilestonePopup}
+                        />
 
-                        <div className="milestones">
-                            {
-                                objective.milestones.map((milestone) => (
-                                    <div>{milestone.title}</div>
-                                ))
-                            }
-                        </div>
 
                     </li>
                 ))}
