@@ -26,7 +26,7 @@ const Todolist = (props) => {
                 <div className="progress-indicator" style={{ width: `${props.completedPercentage}%` }}></div>
             </div>
 
-            <form>
+            <form className="main">
                 <input type="text" value={props.newTitle} onChange={(e) => props.setNewTitle(e.target.value)} placeholder="Add to list..." /> <button onClick={props.addToList}>ADD</button>
             </form>
 

@@ -16,7 +16,7 @@ const Objectives = () => {
 
     function openPopup(id) {
         document.getElementById('deleteDialog-container').classList.add('active');
-        setTargetMilestone(id);
+        setTargetItem(id);
         console.log("The delete button has been clicked!!", targetItem);
     }
 
@@ -112,7 +112,6 @@ const Objectives = () => {
     }
 
 
-
     useEffect(() => {
         if (localStorage.getItem('objectives') != null) {
             setObjectives(JSON.parse(localStorage.getItem('objectives')));
@@ -162,7 +161,7 @@ const Objectives = () => {
                 </div>
             </div>
 
-            <form>
+            <form className="main">
                 <input type="text" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} placeholder="Add to list..." /> <button onClick={addToList}>ADD</button>
             </form>
 

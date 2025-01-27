@@ -181,13 +181,18 @@ $accentColor: yellow;
 
         }
 
-        form {
+        form.main {
+            width: 100%;
+            display: flex;
+
             input[type="text"] {
                 background-color: transparent;
                 padding: .5rem;
+                flex: 1;
                 border: 1px solid #fff;
                 outline: none;
                 color: #fff;
+
             }
 
             input::placeholder {
@@ -245,7 +250,7 @@ $accentColor: yellow;
                     text-align: center;
                 }
 
-                form {
+                form{
                     width: 100%;
 
                     input {
@@ -427,3 +432,9 @@ $accentColor: yellow;
 // @keyframes slideRight {
 
 // }
+
+@media only screen and (max-width: 600px) {
+    .container {
+        background-color: red;
+    }
+}

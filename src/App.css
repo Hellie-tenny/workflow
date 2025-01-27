@@ -183,22 +183,27 @@
   color: yellow;
   border-bottom: 2px solid yellow;
 }
-.App .container form input[type=text] {
+.App .container form.main {
+  width: 100%;
+  display: flex;
+}
+.App .container form.main input[type=text] {
   background-color: transparent;
   padding: 0.5rem;
+  flex: 1;
   border: 1px solid #fff;
   outline: none;
   color: #fff;
 }
-.App .container form input::-moz-placeholder {
+.App .container form.main input::-moz-placeholder {
   color: #fff;
   opacity: 1;
 }
-.App .container form input::placeholder {
+.App .container form.main input::placeholder {
   color: #fff;
   opacity: 1;
 }
-.App .container form button {
+.App .container form.main button {
   background-color: yellow;
   padding: 0.5rem;
   border: none;
@@ -206,7 +211,7 @@
   font-weight: 600;
   cursor: pointer;
 }
-.App .container form button:hover {
+.App .container form.main button:hover {
   background-color: #fff;
   color: rgb(2, 133, 173);
 }
@@ -359,5 +364,10 @@
   }
   100% {
     transform: rotate(0deg);
+  }
+}
+@media only screen and (max-width: 600px) {
+  .container {
+    background-color: red;
   }
 }/*# sourceMappingURL=App.css.map */
